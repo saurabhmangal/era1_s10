@@ -24,33 +24,33 @@ MaxPooling with Kernel Size 4<br>
 FC Layer <br> 
 SoftMax <br> 
 
-The image transformations are also specified which is as follows:
+The image transformations are also specified which is as follows:<br> 
 Uses this transform -RandomCrop 32, 32 (after padding of 4) >> FlipLR >> Followed by CutOut(8, 8)
 
-For the learning rate One Cycle LR is to be used with the following parameters:
-Uses One Cycle Policy such that:
-Total Epochs = 24
-Max at Epoch = 5
-LRMIN = FIND
-LRMAX = FIND
-NO Annihilation
+For the learning rate One Cycle LR is to be used with the following parameters:<br> 
+Uses One Cycle Policy such that:<br> 
+Total Epochs = 24<br> 
+Max at Epoch = 5<br> 
+LRMIN = FIND<br> 
+LRMAX = FIND<br> 
+NO Annihilation<br> 
 
-**File Structure**
-custom_resnet.py - has the customer resnet model created by me. 
-era_s10_cifar.ipynb - the main file
-images:
-     Accuracy & Loss.jpg   -- Plot of train and test accuracy and loss with respect to epochs
-     miss_classified_image.jpg  -- sample mis classified images. 
-     test_dataset.jpg           -- sample test dataset
-     train_dataset.jpg          -- sample train dataset after tranformation
-modular:
-     create_data_loader.py      -- import CIFAR dataset
-     dataloader.py              -- to create train and test loader
-     plots.py                   -- function to plot images
-     train.py                   -- function to train model by calulating loss
-     tranforms.py               -- function to transform image
+**File Structure**<br> 
+custom_resnet.py - has the customer resnet model created by me.<br>  
+era_s10_cifar.ipynb - the main file<br> 
+images:<br> 
+     Accuracy & Loss.jpg   -- Plot of train and test accuracy and loss with respect to epochs<br> 
+     miss_classified_image.jpg  -- sample mis classified images. <br> 
+     test_dataset.jpg           -- sample test dataset<br> 
+     train_dataset.jpg          -- sample train dataset after tranformation<br> 
+modular:<br> 
+     create_data_loader.py      -- import CIFAR dataset<br> 
+     dataloader.py              -- to create train and test loader<br> 
+     plots.py                   -- function to plot images<br> 
+     train.py                   -- function to train model by calulating loss<br> 
+     tranforms.py               -- function to transform image<br> 
 
-The tranformation performed as as follows:
+The tranformation performed as as follows:<br> 
 
     def train_transforms(means,stds):
         transforms = A.Compose(
