@@ -1,20 +1,53 @@
 <!-- #region -->
-**This is the submission for assigment number 8 of ERA V1 course.**
+**This is the submission for assigment number 10 of ERA V1 course.**
 
 **Problem Statement**
-The Task given was to use CIFAR 10 data and get the convolutional network with atleast 70% accuracy. 
+The Task given was to use CIFAR 10 data and get the custom resnet network with accuracy of minimum 90% in 24 EPOCHS. 
 
-The number of parameters had to be less than 50,000 parameters. 
+The architecture has to be followed as provided in the question. This architecture is same as one used by David C Page. The same is as follows:
+PrepLayer - Conv 3x3 s1, p1) >> BN >> RELU [64k]
+Layer1 -
+X = Conv 3x3 (s1, p1) >> MaxPool2D >> BN >> RELU [128k]
+R1 = ResBlock( (Conv-BN-ReLU-Conv-BN-ReLU))(X) [128k] 
+Add(X, R1)
+Layer 2 -
+Conv 3x3 [256k]
+MaxPooling2D
+BN
+ReLU
+Layer 3 -
+X = Conv 3x3 (s1, p1) >> MaxPool2D >> BN >> RELU [512k]
+R2 = ResBlock( (Conv-BN-ReLU-Conv-BN-ReLU))(X) [512k]
+Add(X, R2)
+MaxPooling with Kernel Size 4
+FC Layer 
+SoftMax
 
-It was also asked to use Batch Normalization, Group Normalization and Layer Normalization and observe the results. 
+The image transformations are also specified which is as follows:
+Uses this transform -RandomCrop 32, 32 (after padding of 4) >> FlipLR >> Followed by CutOut(8, 8)
+
+For the learning rate One Cycle LR is to be used with the following parameters:
+Uses One Cycle Policy such that:
+Total Epochs = 24
+Max at Epoch = 5
+LRMIN = FIND
+LRMAX = FIND
+NO Annihilation
 
 **File Structure**
-model.py - has different classes for batch normalization, group normalization and layer normalization. Also as asked, I have also provided the networks used for Assignment 6 and 7. The names are as follows:
-     Net_batch_normalization
-     Net_group_norm
-     Net_layer_normalization
-     Net_s6
-     Net_s7
+custom_resnet.py - has the customer resnet model created by me. 
+era_s10_cifar.ipynb - the main file
+images:
+     Accuracy & Loss.jpg   -- Plot of train and test accuracy and loss with respect to epochs
+     miss_classified_image.jpg  -- sample mis classified images. 
+     test_dataset.jpg           -- sample test dataset
+     train_dataset.jpg          -- sample train dataset after tranformation
+modular:
+     create_data_loader.py      --
+     dataloader.py              --
+     plots.py                   -- function to plot images
+     train.py                   -- function to train model by calulating loss
+     tranforms.py               -- function to transform image
 
 The description of the data is as follows:
 
