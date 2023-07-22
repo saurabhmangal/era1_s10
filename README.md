@@ -1,28 +1,28 @@
 <!-- #region -->
-**This is the submission for assigment number 10 of ERA V1 course.**
+**This is the submission for assigment number 10 of ERA V1 course.**<br> 
 
-**Problem Statement**
-The Task given was to use CIFAR 10 data and get the custom resnet network with accuracy of minimum 90% in 24 EPOCHS. 
+**Problem Statement**<br> 
+The Task given was to use CIFAR 10 data and get the custom resnet network with accuracy of minimum 90% in 24 EPOCHS. <br> 
 
-The architecture has to be followed as provided in the question. This architecture is same as one used by David C Page. The same is as follows:
-***PrepLayer*** 
-Conv 3x3 s1, p1) >> BN >> RELU [64k]
-***Layer1***
-X = Conv 3x3 (s1, p1) >> MaxPool2D >> BN >> RELU [128k]
-R1 = ResBlock( (Conv-BN-ReLU-Conv-BN-ReLU))(X) [128k] 
-Add(X, R1)
-***Layer 2***
-Conv 3x3 [256k]
-MaxPooling2D
-BN
-ReLU
-***Layer 3***
-X = Conv 3x3 (s1, p1) >> MaxPool2D >> BN >> RELU [512k]
-R2 = ResBlock( (Conv-BN-ReLU-Conv-BN-ReLU))(X) [512k]
-Add(X, R2)
-MaxPooling with Kernel Size 4
-FC Layer 
-SoftMax
+The architecture has to be followed as provided in the question. This architecture is same as one used by David C Page. The same is as follows:<br> 
+***PrepLayer*** <br> 
+Conv 3x3 s1, p1) >> BN >> RELU [64k]<br> 
+***Layer1***<br> 
+X = Conv 3x3 (s1, p1) >> MaxPool2D >> BN >> RELU [128k]<br> 
+R1 = ResBlock( (Conv-BN-ReLU-Conv-BN-ReLU))(X) [128k] <br> 
+Add(X, R1)<br> 
+***Layer 2***<br> 
+Conv 3x3 [256k]<br> 
+MaxPooling2D<br> 
+BN<br> 
+ReLU<br> 
+***Layer 3***<br> 
+X = Conv 3x3 (s1, p1) >> MaxPool2D >> BN >> RELU [512k]<br> 
+R2 = ResBlock( (Conv-BN-ReLU-Conv-BN-ReLU))(X) [512k]<br> 
+Add(X, R2)<br> 
+MaxPooling with Kernel Size 4<br> 
+FC Layer <br> 
+SoftMax <br> 
 
 The image transformations are also specified which is as follows:
 Uses this transform -RandomCrop 32, 32 (after padding of 4) >> FlipLR >> Followed by CutOut(8, 8)
