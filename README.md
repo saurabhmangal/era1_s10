@@ -43,431 +43,95 @@ images:
      test_dataset.jpg           -- sample test dataset
      train_dataset.jpg          -- sample train dataset after tranformation
 modular:
-     create_data_loader.py      --
-     dataloader.py              --
+     create_data_loader.py      -- import CIFAR dataset
+     dataloader.py              -- to create train and test loader
      plots.py                   -- function to plot images
      train.py                   -- function to train model by calulating loss
      tranforms.py               -- function to transform image
 
-The description of the data is as follows:
+The tranformation performed as as follows:
+    def train_transforms(means,stds):
+        transforms = A.Compose(
+            [
+                A.Normalize(mean=means, std=stds, always_apply=True),
+                A.PadIfNeeded(min_height=40, min_width=40, always_apply=True),
+                A.RandomCrop(height=32, width=32, always_apply=True),
+                A.HorizontalFlip(),
+                A.CoarseDropout(max_holes=1, max_height=8, max_width=8, min_holes=1, min_height=8, min_width=8, fill_value=means),
+                ToTensorV2(),
+            ]
+        )
 
-Dataset CIFAR10
-    Number of datapoints: 50000
-    Root location: ./data
-    Split: Train
-    StandardTransform
-Transform: Compose(
-               RandomAutocontrast(p=0.1)
-               RandomRotation(degrees=[-7.0, 7.0], interpolation=nearest, expand=False, fill=1)
-               ToTensor()
-               Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-           )
-Dataset CIFAR10
-    Number of datapoints: 10000
-    Root location: ./data
-    Split: Test
-    StandardTransform
-Transform: Compose(
-               ToTensor()
-               Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-           )
-
+    def test_transforms(means,stds):
+        transforms = A.Compose(
+            [
+                A.Normalize(mean=means, std=stds, always_apply=True),
+                ToTensorV2(),
+            ]
+        )
+        return transforms
+        
 Following are the sample images of train dataset:
-<img src="https://github.com/saurabhmangal/era_s8/blob/master/train_dataset.jpg" alt="alt text" width="600px">
+<img src="https://github.com/saurabhmangal/era1_s10/blob/master/train_dataset.jpg" alt="alt text" width="600px">
 
 Following are the sample imagese of the test dataset:
-<img src="https://github.com/saurabhmangal/era_s8/blob/master/test_dataset.jpg" alt="alt text" width="600px">
+<img src="https://github.com/saurabhmangal/era1_s10/blob/master/test_dataset.jpg" alt="alt text" width="600px">
 
 
 
 
-**PARAMETERS FOR BATCH NORMALIZARTION ARCHITECTURE**
-
-----------------------------------------------------------------
-        Layer (type)               Output Shape         Param # <\b>
-        
-================================================================
-            Conv2d-1           [-1, 48, 32, 32]           1,344 <\b>
-              ReLU-2           [-1, 48, 32, 32]               0 <\b>
-       BatchNorm2d-3           [-1, 48, 32, 32]              96 <\b>
-         Dropout2d-4           [-1, 48, 32, 32]               0 <\b>
-            Conv2d-5           [-1, 48, 32, 32]          20,784 <\b>
-              ReLU-6           [-1, 48, 32, 32]               0 <\b>
-       BatchNorm2d-7           [-1, 48, 32, 32]              96 <\b>
-         Dropout2d-8           [-1, 48, 32, 32]               0 <\b>
-            Conv2d-9           [-1, 32, 32, 32]           1,568 <\b>
-        MaxPool2d-10           [-1, 32, 16, 16]               0 <\b>
-           Conv2d-11           [-1, 32, 16, 16]           9,248 <\b>
-             ReLU-12           [-1, 32, 16, 16]               0 <\b>
-      BatchNorm2d-13           [-1, 32, 16, 16]              64 <\b>
-        Dropout2d-14           [-1, 32, 16, 16]               0 <\b>
-           Conv2d-15           [-1, 32, 16, 16]           9,248 <\b>
-             ReLU-16           [-1, 32, 16, 16]               0 <\b>
-      BatchNorm2d-17           [-1, 32, 16, 16]              64 <\b>
-        Dropout2d-18           [-1, 32, 16, 16]               0 <\b>
-           Conv2d-19           [-1, 32, 16, 16]           1,056 <\b>
-        MaxPool2d-20             [-1, 32, 8, 8]               0 <\b>
-           Conv2d-21             [-1, 16, 8, 8]           4,624 <\b>
-             ReLU-22             [-1, 16, 8, 8]               0 <\b>
-      BatchNorm2d-23             [-1, 16, 8, 8]              32 <\b>
-        Dropout2d-24             [-1, 16, 8, 8]               0 <\b>
-           Conv2d-25              [-1, 8, 8, 8]           1,160 <\b>
-             ReLU-26              [-1, 8, 8, 8]               0 <\b>
-      BatchNorm2d-27              [-1, 8, 8, 8]              16 <\b>
-        Dropout2d-28              [-1, 8, 8, 8]               0 <\b>
-           Conv2d-29             [-1, 10, 8, 8]             730 <\b>
-             ReLU-30             [-1, 10, 8, 8]               0 <\b>
-      BatchNorm2d-31             [-1, 10, 8, 8]              20 <\b>
-        Dropout2d-32             [-1, 10, 8, 8]               0 <\b>
-AdaptiveAvgPool2d-33             [-1, 10, 1, 1]               0 <\b>
-           Conv2d-34             [-1, 10, 1, 1]             110 <\b>
-
-
-================================================================
-Total params: 50,260
-Trainable params: 50,260
-Non-trainable params: 0
-
-----------------------------------------------------------------
-Input size (MB): 0.01
-Forward/backward pass size (MB): 3.96
-Params size (MB): 0.19
-Estimated Total Size (MB): 4.16
-
-----------------------------------------------------------------
-
-
-** TRAIN ACCURACY:  72.792 TRAIN LOSS:  0.8170133829116821 **
-** TEST ACCURACY:  74.02 TEST LOSS:  0.7378784431934357  **
-
-Following are the sample images of the test dataset:
-<img src="https://github.com/saurabhmangal/era_s8/blob/master/batch_norm.jpg" alt="alt text" width="600px">
-
----------------------------------------------------------------------------------------------------------------------------
----------------------------------------------------------------------------------------------------------------------------
----------------------------------------------------------------------------------------------------------------------------
-
-**PARAMETERS FOR BATCH Group Normalization ARCHITECTURE**
-
-----------------------------------------------------------------
-        Layer (type)               Output Shape         Param # <\b>
-        
-================================================================
-            Conv2d-1           [-1, 48, 32, 32]           1,344 <\b>
-              ReLU-2           [-1, 48, 32, 32]               0 <\b>
-         GroupNorm-3           [-1, 48, 32, 32]              96 <\b>
-         Dropout2d-4           [-1, 48, 32, 32]               0 <\b>
-            Conv2d-5           [-1, 48, 32, 32]          20,784 <\b>
-              ReLU-6           [-1, 48, 32, 32]               0 <\b>
-         GroupNorm-7           [-1, 48, 32, 32]              96 <\b>
-         Dropout2d-8           [-1, 48, 32, 32]               0 <\b>
-            Conv2d-9           [-1, 32, 32, 32]           1,568 <\b>
-        MaxPool2d-10           [-1, 32, 16, 16]               0 <\b>
-           Conv2d-11           [-1, 32, 16, 16]           9,248 <\b>
-             ReLU-12           [-1, 32, 16, 16]               0 <\b>
-        GroupNorm-13           [-1, 32, 16, 16]              64 <\b>
-        Dropout2d-14           [-1, 32, 16, 16]               0 <\b>
-           Conv2d-15           [-1, 32, 16, 16]           9,248 <\b>
-             ReLU-16           [-1, 32, 16, 16]               0 <\b>
-        GroupNorm-17           [-1, 32, 16, 16]              64 <\b>
-        Dropout2d-18           [-1, 32, 16, 16]               0 <\b>
-           Conv2d-19           [-1, 32, 16, 16]           1,056 <\b>
-        MaxPool2d-20             [-1, 32, 8, 8]               0 <\b>
-           Conv2d-21             [-1, 16, 8, 8]           4,624 <\b>
-             ReLU-22             [-1, 16, 8, 8]               0 <\b>
-        GroupNorm-23             [-1, 16, 8, 8]              32 <\b>
-        Dropout2d-24             [-1, 16, 8, 8]               0 <\b>
-           Conv2d-25              [-1, 8, 8, 8]           1,160 <\b>
-             ReLU-26              [-1, 8, 8, 8]               0 <\b>
-        GroupNorm-27              [-1, 8, 8, 8]              16 <\b>
-        Dropout2d-28              [-1, 8, 8, 8]               0 <\b>
-           Conv2d-29             [-1, 10, 8, 8]             730 <\b>
-             ReLU-30             [-1, 10, 8, 8]               0 <\b>
-        GroupNorm-31             [-1, 10, 8, 8]              20 <\b>
-        Dropout2d-32             [-1, 10, 8, 8]               0 <\b>
-AdaptiveAvgPool2d-33             [-1, 10, 1, 1]               0 <\b>
-           Conv2d-34             [-1, 10, 1, 1]             110 <\b>
-           
-================================================================
-Total params: 50,260
-Trainable params: 50,260
-Non-trainable params: 0
-
-----------------------------------------------------------------
-Input size (MB): 0.01
-Forward/backward pass size (MB): 3.96
-Params size (MB): 0.19
-Estimated Total Size (MB): 4.16
-
-----------------------------------------------------------------
-
-** TRAIN ACCURACY:  71.612 TRAIN LOSS:  0.4181869626045227 **
-** TEST ACCURACY:  71.23 TEST LOSS:  0.8142993453979492 **
-
-
-Following are the sample imagese of the test dataset:
-<img src="https://github.com/saurabhmangal/era_s8/blob/master/group_norm.jpg" alt="alt text" width="600px">
-
----------------------------------------------------------------------------------------------------------------------------
----------------------------------------------------------------------------------------------------------------------------
----------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-**PARAMETERS FOR LAYER NORMALIZARTION ARCHITECTURE**
-
-----------------------------------------------------------------
-        Layer (type)               Output Shape         Param # <\b>
-        
-================================================================
-            Conv2d-1           [-1, 10, 32, 32]             280 <\b>
-              ReLU-2           [-1, 10, 32, 32]               0 <\b>
-         LayerNorm-3           [-1, 10, 32, 32]          20,480 <\b>
-         Dropout2d-4           [-1, 10, 32, 32]               0 <\b>
-            Conv2d-5            [-1, 8, 32, 32]             728 <\b>
-              ReLU-6            [-1, 8, 32, 32]               0 <\b>
-         LayerNorm-7            [-1, 8, 32, 32]          16,384 <\b>
-         Dropout2d-8            [-1, 8, 32, 32]               0 <\b>
-            Conv2d-9           [-1, 16, 32, 32]             144 <\b>
-        MaxPool2d-10           [-1, 16, 16, 16]               0 <\b>
-           Conv2d-11            [-1, 8, 16, 16]           1,160 <\b>
-             ReLU-12            [-1, 8, 16, 16]               0 <\b>
-        LayerNorm-13            [-1, 8, 16, 16]           4,096 <\b>
-        Dropout2d-14            [-1, 8, 16, 16]               0 <\b>
-           Conv2d-15           [-1, 16, 16, 16]             144 <\b>
-        MaxPool2d-16             [-1, 16, 8, 8]               0 <\b>
-           Conv2d-17              [-1, 8, 8, 8]           1,160 <\b>
-             ReLU-18              [-1, 8, 8, 8]               0 <\b>
-        LayerNorm-19              [-1, 8, 8, 8]           1,024 <\b>
-        Dropout2d-20              [-1, 8, 8, 8]               0 <\b>
-           Conv2d-21              [-1, 4, 8, 8]             292 <\b>
-             ReLU-22              [-1, 4, 8, 8]               0 <\b>
-        LayerNorm-23              [-1, 4, 8, 8]             512 <\b>
-        Dropout2d-24              [-1, 4, 8, 8]               0 <\b>
-           Conv2d-25             [-1, 10, 8, 8]             370 <\b>
-             ReLU-26             [-1, 10, 8, 8]               0 <\b>
-        LayerNorm-27             [-1, 10, 8, 8]           1,280 <\b>
-        Dropout2d-28             [-1, 10, 8, 8]               0 <\b>
-AdaptiveAvgPool2d-29             [-1, 10, 1, 1]               0 <\b>
-           Conv2d-30             [-1, 10, 1, 1]             110 <\b>
-           
-================================================================
-Total params: 48,164
-Trainable params: 48,164
-Non-trainable params: 0
-
-----------------------------------------------------------------
-Input size (MB): 0.01
-Forward/backward pass size (MB): 0.86
-Params size (MB): 0.18
-Estimated Total Size (MB): 1.06
-
-----------------------------------------------------------------
-
-
-** TRAIN ACCURACY:  53.694 TRAIN LOSS:  1.3298343420028687 **
-** TEST ACCURACY:  55.56 TEST LOSS:  1.2183823497772217   **
-
-Following are the sample imagese of the test dataset:
-<img src="https://github.com/saurabhmangal/era_s8/blob/master/group_norm.jpg" alt="alt text" width="600px">
-
----------------------------------------------------------------------------------------------------------------------------
----------------------------------------------------------------------------------------------------------------------------
----------------------------------------------------------------------------------------------------------------------------
-
-<!-- #endregion -->
-
-**PARAMETERS FOR BATCH NORMALIZARTION ARCHITECTURE**
+**Custom Resnet ARCHITECTURE**
 
 ----------------------------------------------------------------
         Layer (type)               Output Shape         Param #
-        
 ================================================================
-            Conv2d-1           [-1, 48, 32, 32]           1,344
-              ReLU-2           [-1, 48, 32, 32]               0
-       BatchNorm2d-3           [-1, 48, 32, 32]              96
-         Dropout2d-4           [-1, 48, 32, 32]               0
-            Conv2d-5           [-1, 48, 32, 32]          20,784
-              ReLU-6           [-1, 48, 32, 32]               0
-       BatchNorm2d-7           [-1, 48, 32, 32]              96
-         Dropout2d-8           [-1, 48, 32, 32]               0
-            Conv2d-9           [-1, 32, 32, 32]           1,568
-        MaxPool2d-10           [-1, 32, 16, 16]               0
-           Conv2d-11           [-1, 32, 16, 16]           9,248
-             ReLU-12           [-1, 32, 16, 16]               0
-      BatchNorm2d-13           [-1, 32, 16, 16]              64
-        Dropout2d-14           [-1, 32, 16, 16]               0
-           Conv2d-15           [-1, 32, 16, 16]           9,248
-             ReLU-16           [-1, 32, 16, 16]               0
-      BatchNorm2d-17           [-1, 32, 16, 16]              64
-        Dropout2d-18           [-1, 32, 16, 16]               0
-           Conv2d-19           [-1, 32, 16, 16]           1,056
-        MaxPool2d-20             [-1, 32, 8, 8]               0
-           Conv2d-21             [-1, 16, 8, 8]           4,624
-             ReLU-22             [-1, 16, 8, 8]               0
-      BatchNorm2d-23             [-1, 16, 8, 8]              32
-        Dropout2d-24             [-1, 16, 8, 8]               0
-           Conv2d-25              [-1, 8, 8, 8]           1,160
-             ReLU-26              [-1, 8, 8, 8]               0
-      BatchNorm2d-27              [-1, 8, 8, 8]              16
-        Dropout2d-28              [-1, 8, 8, 8]               0
-           Conv2d-29             [-1, 10, 8, 8]             730
-             ReLU-30             [-1, 10, 8, 8]               0
-      BatchNorm2d-31             [-1, 10, 8, 8]              20
-        Dropout2d-32             [-1, 10, 8, 8]               0
-AdaptiveAvgPool2d-33             [-1, 10, 1, 1]               0
-           Conv2d-34             [-1, 10, 1, 1]             110
-
-
+            Conv2d-1           [-1, 64, 32, 32]           1,792
+       BatchNorm2d-2           [-1, 64, 32, 32]             128
+              ReLU-3           [-1, 64, 32, 32]               0
+            Conv2d-4          [-1, 128, 32, 32]          73,856
+         MaxPool2d-5          [-1, 128, 16, 16]               0
+       BatchNorm2d-6          [-1, 128, 16, 16]             256
+              ReLU-7          [-1, 128, 16, 16]               0
+            Conv2d-8          [-1, 128, 16, 16]         147,584
+       BatchNorm2d-9          [-1, 128, 16, 16]             256
+             ReLU-10          [-1, 128, 16, 16]               0
+           Conv2d-11          [-1, 128, 16, 16]         147,584
+      BatchNorm2d-12          [-1, 128, 16, 16]             256
+             ReLU-13          [-1, 128, 16, 16]               0
+           Conv2d-14          [-1, 256, 16, 16]         295,168
+        MaxPool2d-15            [-1, 256, 8, 8]               0
+      BatchNorm2d-16            [-1, 256, 8, 8]             512
+             ReLU-17            [-1, 256, 8, 8]               0
+           Conv2d-18            [-1, 512, 8, 8]       1,180,160
+        MaxPool2d-19            [-1, 512, 4, 4]               0
+      BatchNorm2d-20            [-1, 512, 4, 4]           1,024
+             ReLU-21            [-1, 512, 4, 4]               0
+           Conv2d-22            [-1, 512, 4, 4]       2,359,808
+      BatchNorm2d-23            [-1, 512, 4, 4]           1,024
+             ReLU-24            [-1, 512, 4, 4]               0
+           Conv2d-25            [-1, 512, 4, 4]       2,359,808
+      BatchNorm2d-26            [-1, 512, 4, 4]           1,024
+             ReLU-27            [-1, 512, 4, 4]               0
+        MaxPool2d-28            [-1, 512, 1, 1]               0
+           Linear-29                   [-1, 10]           5,130
 ================================================================
-Total params: 50,260
-Trainable params: 50,260
+Total params: 6,575,370
+Trainable params: 6,575,370
 Non-trainable params: 0
-
 ----------------------------------------------------------------
 Input size (MB): 0.01
-Forward/backward pass size (MB): 3.96
-Params size (MB): 0.19
-Estimated Total Size (MB): 4.16
-
+Forward/backward pass size (MB): 6.44
+Params size (MB): 25.08
+Estimated Total Size (MB): 31.54
 ----------------------------------------------------------------
 
 
-** TRAIN ACCURACY:  72.792 TRAIN LOSS:  0.8170133829116821 **
-** TEST ACCURACY:  74.02 TEST LOSS:  0.7378784431934357  **
+**Last Epoch Results:**
+**EPOCH: 23**
+**Loss=0.042819224298000336 LR =-1.5486702470463194e-06 Batch_id=48 Accuracy=98.64: 100% 49/49 [00:09<00:00,  5.15it/s]**
 
-Following are the sample imagese of the test dataset:
-<img src="https://github.com/saurabhmangal/era1_s6/blob/master/E_total_vs_Learning_rate.png" alt="alt text" width="600px">
+**Test set: Average loss: 0.0002, Accuracy: 9239/10000 (92.39%)**
 
----------------------------------------------------------------------------------------------------------------------------
----------------------------------------------------------------------------------------------------------------------------
----------------------------------------------------------------------------------------------------------------------------
-
-**PARAMETERS FOR BATCH Group Normalization ARCHITECTURE**
-
-----------------------------------------------------------------
-        Layer (type)               Output Shape         Param #
-        
-================================================================
-            Conv2d-1           [-1, 48, 32, 32]           1,344
-              ReLU-2           [-1, 48, 32, 32]               0
-         GroupNorm-3           [-1, 48, 32, 32]              96
-         Dropout2d-4           [-1, 48, 32, 32]               0
-            Conv2d-5           [-1, 48, 32, 32]          20,784
-              ReLU-6           [-1, 48, 32, 32]               0
-         GroupNorm-7           [-1, 48, 32, 32]              96
-         Dropout2d-8           [-1, 48, 32, 32]               0
-            Conv2d-9           [-1, 32, 32, 32]           1,568
-        MaxPool2d-10           [-1, 32, 16, 16]               0
-           Conv2d-11           [-1, 32, 16, 16]           9,248
-             ReLU-12           [-1, 32, 16, 16]               0
-        GroupNorm-13           [-1, 32, 16, 16]              64
-        Dropout2d-14           [-1, 32, 16, 16]               0
-           Conv2d-15           [-1, 32, 16, 16]           9,248
-             ReLU-16           [-1, 32, 16, 16]               0
-        GroupNorm-17           [-1, 32, 16, 16]              64
-        Dropout2d-18           [-1, 32, 16, 16]               0
-           Conv2d-19           [-1, 32, 16, 16]           1,056
-        MaxPool2d-20             [-1, 32, 8, 8]               0
-           Conv2d-21             [-1, 16, 8, 8]           4,624
-             ReLU-22             [-1, 16, 8, 8]               0
-        GroupNorm-23             [-1, 16, 8, 8]              32
-        Dropout2d-24             [-1, 16, 8, 8]               0
-           Conv2d-25              [-1, 8, 8, 8]           1,160
-             ReLU-26              [-1, 8, 8, 8]               0
-        GroupNorm-27              [-1, 8, 8, 8]              16
-        Dropout2d-28              [-1, 8, 8, 8]               0
-           Conv2d-29             [-1, 10, 8, 8]             730
-             ReLU-30             [-1, 10, 8, 8]               0
-        GroupNorm-31             [-1, 10, 8, 8]              20
-        Dropout2d-32             [-1, 10, 8, 8]               0
-AdaptiveAvgPool2d-33             [-1, 10, 1, 1]               0
-           Conv2d-34             [-1, 10, 1, 1]             110
-           
-================================================================
-Total params: 50,260
-Trainable params: 50,260
-Non-trainable params: 0
-
-----------------------------------------------------------------
-Input size (MB): 0.01
-Forward/backward pass size (MB): 3.96
-Params size (MB): 0.19
-Estimated Total Size (MB): 4.16
-
-----------------------------------------------------------------
-
-** TRAIN ACCURACY:  71.612 TRAIN LOSS:  0.4181869626045227 **
-** TEST ACCURACY:  71.23 TEST LOSS:  0.8142993453979492 **
-
-
-Following are the sample imagese of the test dataset:
-<img src="https://github.com/saurabhmangal/era1_s6/blob/master/E_total_vs_Learning_rate.png" alt="alt text" width="600px">
-
----------------------------------------------------------------------------------------------------------------------------
----------------------------------------------------------------------------------------------------------------------------
----------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-**PARAMETERS FOR LAYER NORMALIZARTION ARCHITECTURE**
-
-----------------------------------------------------------------
-        Layer (type)               Output Shape         Param #
-        
-================================================================
-            Conv2d-1           [-1, 10, 32, 32]             280
-              ReLU-2           [-1, 10, 32, 32]               0
-         LayerNorm-3           [-1, 10, 32, 32]          20,480
-         Dropout2d-4           [-1, 10, 32, 32]               0
-            Conv2d-5            [-1, 8, 32, 32]             728
-              ReLU-6            [-1, 8, 32, 32]               0
-         LayerNorm-7            [-1, 8, 32, 32]          16,384
-         Dropout2d-8            [-1, 8, 32, 32]               0
-            Conv2d-9           [-1, 16, 32, 32]             144
-        MaxPool2d-10           [-1, 16, 16, 16]               0
-           Conv2d-11            [-1, 8, 16, 16]           1,160
-             ReLU-12            [-1, 8, 16, 16]               0
-        LayerNorm-13            [-1, 8, 16, 16]           4,096
-        Dropout2d-14            [-1, 8, 16, 16]               0
-           Conv2d-15           [-1, 16, 16, 16]             144
-        MaxPool2d-16             [-1, 16, 8, 8]               0
-           Conv2d-17              [-1, 8, 8, 8]           1,160
-             ReLU-18              [-1, 8, 8, 8]               0
-        LayerNorm-19              [-1, 8, 8, 8]           1,024
-        Dropout2d-20              [-1, 8, 8, 8]               0
-           Conv2d-21              [-1, 4, 8, 8]             292
-             ReLU-22              [-1, 4, 8, 8]               0
-        LayerNorm-23              [-1, 4, 8, 8]             512
-        Dropout2d-24              [-1, 4, 8, 8]               0
-           Conv2d-25             [-1, 10, 8, 8]             370
-             ReLU-26             [-1, 10, 8, 8]               0
-        LayerNorm-27             [-1, 10, 8, 8]           1,280
-        Dropout2d-28             [-1, 10, 8, 8]               0
-AdaptiveAvgPool2d-29             [-1, 10, 1, 1]               0
-           Conv2d-30             [-1, 10, 1, 1]             110
-           
-================================================================
-Total params: 48,164
-Trainable params: 48,164
-Non-trainable params: 0
-
-----------------------------------------------------------------
-Input size (MB): 0.01
-Forward/backward pass size (MB): 0.86
-Params size (MB): 0.18
-Estimated Total Size (MB): 1.06
-
-----------------------------------------------------------------
-
-
-** TRAIN ACCURACY:  53.694 TRAIN LOSS:  1.3298343420028687 **
-** TEST ACCURACY:  55.56 TEST LOSS:  1.2183823497772217   **
-
-Following are the sample imagese of the test dataset:
-<img src="https://github.com/saurabhmangal/era1_s6/blob/master/E_total_vs_Learning_rate.png" alt="alt text" width="600px">
 
 ---------------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------------------------
