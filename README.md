@@ -50,6 +50,7 @@ modular:
      tranforms.py               -- function to transform image
 
 The tranformation performed as as follows:
+
     def train_transforms(means,stds):
         transforms = A.Compose(
             [
