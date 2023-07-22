@@ -133,10 +133,10 @@ Estimated Total Size (MB): 31.54
 **Test set: Average loss: 0.0002, Accuracy: 9239/10000 (92.39%)**
 
 Following are the plot of train and test losses and accuracies:
-<img src="https://github.com/saurabhmangal/era1_s10/blob/main/images/.jpg" alt="alt text" width="600px">
+<img src="https://github.com/saurabhmangal/era1_s10/blob/main/images/Accuracy%20%26%20Loss.jpg" alt="alt text" width="600px">
 
 Some of the sample misclassified images are as follows:
-<img src="https://github.com/saurabhmangal/era1_s10/blob/main/images/test_dataset.jpg" alt="alt text" width="600px">
+<img src="https://github.com/saurabhmangal/era1_s10/blob/main/images/miss_classified_image.jpg" alt="alt text" width="600px">
 
 Plot for One Cycle LR policy:
 <img src="https://github.com/saurabhmangal/era1_s10/blob/main/images/test_dataset.jpg" alt="alt text" width="600px">
