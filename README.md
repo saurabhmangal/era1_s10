@@ -139,7 +139,7 @@ Some of the sample misclassified images are as follows:
 <img src="https://github.com/saurabhmangal/era1_s10/blob/main/images/miss_classified_image.jpg" alt="alt text" width="600px">
 
 Plot for One Cycle LR policy:
-<img src="https://github.com/saurabhmangal/era1_s10/blob/main/images/test_dataset.jpg" alt="alt text" width="600px">
+<img src="https://github.com/saurabhmangal/era1_s10/blob/main/images/oneLRcurve.png" alt="alt text" width="600px">
 
 ---------------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------------------------
