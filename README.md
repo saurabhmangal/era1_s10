@@ -72,10 +72,10 @@ The tranformation performed as as follows:
         return transforms
         
 Following are the sample images of train dataset:
-<img src="https://github.com/saurabhmangal/era1_s10/blob/master/train_dataset.jpg" alt="alt text" width="600px">
+<img src="https://github.com/saurabhmangal/era1_s10/blob/main/images/test_dataset.jpg" alt="alt text" width="600px">
 
 Following are the sample imagese of the test dataset:
-<img src="[https://github.com/saurabhmangal/era1_s10/blob/master/test_dataset.jpg](https://github.com/saurabhmangal/era1_s10/blob/main/images/test_dataset.jpg)" alt="alt text" width="600px">
+<img src="https://github.com/saurabhmangal/era1_s10/blob/main/images/test_dataset.jpg" alt="alt text" width="600px">
 
 
 
