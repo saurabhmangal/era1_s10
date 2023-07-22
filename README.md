@@ -73,16 +73,16 @@ The tranformation performed as as follows:<br>
         )
         return transforms
         
-Following are the sample images of train dataset:
+Following are the sample images of train dataset:<br> 
 <img src="https://github.com/saurabhmangal/era1_s10/blob/main/images/test_dataset.jpg" alt="alt text" width="600px">
 
-Following are the sample imagese of the test dataset:
+Following are the sample imagese of the test dataset:<br> 
 <img src="https://github.com/saurabhmangal/era1_s10/blob/main/images/test_dataset.jpg" alt="alt text" width="600px">
 
 
 
 
-**Custom Resnet ARCHITECTURE******
+**Custom Resnet ARCHITECTURE**<br> 
 <img src="https://github.com/saurabhmangal/era1_s10/blob/main/images/model10.JPG" alt="alt text" width="600px">
 
 
@@ -92,14 +92,14 @@ Following are the sample imagese of the test dataset:
 
 **Test set: Average loss: 0.0002, Accuracy: 9239/10000 (92.39%)**
 
-Following are the plot of train and test losses and accuracies:
-<img src="https://github.com/saurabhmangal/era1_s10/blob/main/images/Accuracy%20%26%20Loss.jpg" alt="alt text" width="600px">
+Following are the plot of train and test losses and accuracies:<br> 
+<img src="https://github.com/saurabhmangal/era1_s10/blob/main/images/Accuracy%20%26%20Loss.jpg" alt="alt text" width="600px"><br> 
 
-Some of the sample misclassified images are as follows:
-<img src="https://github.com/saurabhmangal/era1_s10/blob/main/images/miss_classified_image.jpg" alt="alt text" width="600px">
+Some of the sample misclassified images are as follows:<br> 
+<img src="https://github.com/saurabhmangal/era1_s10/blob/main/images/mis_classified_image.jpg" alt="alt text" width="600px"><br> 
 
-Plot for One Cycle LR policy:
-<img src="https://github.com/saurabhmangal/era1_s10/blob/main/images/oneLRcurve.png" alt="alt text" width="600px">
+Plot for One Cycle LR policy:<br> 
+<img src="https://github.com/saurabhmangal/era1_s10/blob/main/images/oneLRcurve.png" alt="alt text" width="600px"><br> 
 
 ---------------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------------------------
