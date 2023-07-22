@@ -43,12 +43,15 @@ Uses One Cycle Policy such that:<br>
 
 **File Structure**<br> 
 -custom_resnet.py - has the customer resnet model created by me<br>
+
 -era_s10_cifar.ipynb - the main file<br> 
+
 -images:<br> 
   -Accuracy & Loss.jpg   -- Plot of train and test accuracy and loss with respect to epochs<br> 
   -miss_classified_image.jpg  -- sample mis classified images. <br> 
   -test_dataset.jpg           -- sample test dataset<br> 
   -train_dataset.jpg          -- sample train dataset after tranformation<br> 
+
 -modular:<br> 
   -create_data_loader.py      -- import CIFAR dataset<br> 
   -dataloader.py              -- to create train and test loader<br> 
